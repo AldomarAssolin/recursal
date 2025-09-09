@@ -52,6 +52,7 @@
     .btn-outline{
       background:transparent; color:var(--white); border:2px solid var(--white);
     }
+    .btn.-whats i{font-size:1.05rem}
     .badge{
       display:inline-flex; align-items:center; gap:.45rem;
       background:var(--yellow); color:#111; border-radius:999px; font-weight:800;
@@ -75,6 +76,35 @@
     .nav a{opacity:.9}
     .nav a:hover{opacity:1}
     .nav .menu{display:flex; gap:1rem; align-items:center; flex-wrap:wrap}
+
+    /* Desktop menu */
+  .menu-desktop{display:flex;gap:1rem;align-items:center}
+  .menu-desktop a{color:#eee;opacity:.92}
+  .menu-desktop a:hover{opacity:1}
+
+    /* Hamburguer button */
+  .nav-toggle{display:none;position:relative;width:44px;height:44px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:var(--black-soft);cursor:pointer}
+  .nav-toggle .bar{position:absolute;left:10px;right:10px;height:2px;background:#fff;transition:.2s}
+  .nav-toggle .bar:nth-child(1){top:13px}
+  .nav-toggle .bar:nth-child(2){top:21px}
+  .nav-toggle .bar:nth-child(3){top:29px}
+  .nav-toggle[aria-expanded="true"] .bar:nth-child(1){transform:translateY(8px) rotate(45deg)}
+  .nav-toggle[aria-expanded="true"] .bar:nth-child(2){opacity:0}
+  .nav-toggle[aria-expanded="true"] .bar:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+  /* Painel Mobile */
+  .menu-mobile{
+    position:absolute; inset:auto 0 auto 0; top:100%;
+    background:#111; border-bottom:1px solid rgba(255,255,255,.08);
+    display:grid; gap:.4rem; padding:0 .9rem; overflow:hidden;
+    max-height:0; opacity:0; visibility:hidden; transform:translateY(-6px);
+    transition:max-height .35s ease, opacity .25s ease, transform .25s ease, visibility .25s;
+  }
+  .menu-mobile.is-open{max-height:420px; opacity:1; visibility:visible; transform:translateY(0)}
+  .mm-link{display:block;padding:1rem .6rem;border-bottom:1px solid rgba(255,255,255,.06);color:#eee}
+  .mm-link:last-of-type{border-bottom:0}
+  .mm-cta{margin:.7rem .4rem 1rem}
+
 
     /* HERO */
     .hero{
@@ -175,28 +205,57 @@
       display:inline-flex; align-items:center; gap:.6rem; padding:.85rem 1rem; border-radius:999px;
       background:#25D366; color:#111; font-weight:900; box-shadow:var(--shadow);
     }
+
+      /* Breakpoints / responsividade extra */
+  @media (max-width: 980px){
+    .menu-desktop{display:none}
+    .nav-toggle{display:inline-block}
+    .container{width:min(1180px,94%)}
+    /* ajustes comuns da sua LP */
+    .hero h1{font-size:clamp(1.8rem,6.2vw,2.3rem)}
+    .hero .lead{font-size:clamp(.98rem,3.6vw,1.05rem)}
+    .grid-2,.grid-3{grid-template-columns:1fr !important}
+    .logos-row{gap:1.2rem}
+  }
+  @media (min-width:981px){
+    .menu-mobile{display:none}
+  }
   </style>
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
-  <header>
-    <div class="container nav">
-      <a href="#inicio" class="brand">
-        <img src="images/logo.jpg" alt="Recursal">
-        <strong>RECURSAL</strong>
-      </a>
-      <nav class="menu">
-        <a href="#beneficios">Benefícios</a>
-        <a href="#como-funciona">Como funciona</a>
-        <a href="#videos">Vídeos</a>
-        <a href="#faq">FAQ</a>
-        <a href="#contato" class="btn" aria-label="Falar no WhatsApp">
-          <i class="fa-brands fa-whatsapp"></i> WhatsApp
-        </a>
-      </nav>
-    </div>
-  </header>
+<!-- ✅ HEADER com Menu Mobile -->
+<header class="site-header">
+  <div class="container nav">
+    <a href="#inicio" class="brand" aria-label="Página inicial">
+      <img src="images/logo.jpg" alt="Recursal">
+      <strong>RECURSAL</strong>
+    </a>
+
+    <!-- Botão Hamburguer -->
+    <button class="nav-toggle" aria-label="Abrir menu" aria-controls="primary-menu" aria-expanded="false">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+
+    <!-- Navegação Desktop -->
+    <nav class="menu-desktop" aria-label="Principal">
+      <a href="#beneficios">Benefícios</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#videos">Vídeos</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contato" class="btn -whats"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+    </nav>
+  </div>
+
+  <!-- Painel Mobile (desliza abaixo do header) -->
+  <nav id="primary-menu" class="menu-mobile" aria-label="Menu mobile">
+    <a href="#beneficios" class="mm-link">Benefícios</a>
+    <a href="#como-funciona" class="mm-link">Como funciona</a>
+    <a href="#videos" class="mm-link">Vídeos</a>
+    <a href="#faq" class="mm-link">FAQ</a>
+    <a href="#contato" class="btn -whats mm-cta"><i class="fa-brands fa-whatsapp"></i> Falar no WhatsApp</a>
+  </nav>
+</header>
 
   <!-- ===== HERO ===== -->
   <!-- Hero Section -->
@@ -526,7 +585,7 @@
 
   <!-- BOTÃO FLOTANTE -->
   <a class="float-whats" href="https://wa.me/5555996809646?text=Ol%C3%A1!%20Quero%20ajuda%20com%20recurso%20de%20multa%20e%20minha%20CNH." target="_blank" rel="noopener">
-    <i class="fa-brands fa-whatsapp"></i> Atendimento
+    <i class="fa-brands fa-whatsapp"></i>
   </a>
 
   <!-- SEO / STRUCTURED DATA -->
@@ -582,5 +641,32 @@
       return false;
     }
   </script>
+
+  <!-- JS -->
+<script>
+  (function(){
+    const toggle = document.querySelector('.nav-toggle');
+    const panel  = document.getElementById('primary-menu');
+
+    function closeOnLinkClick(e){
+      if(e.target.matches('a')){ panel.classList.remove('is-open'); toggle.setAttribute('aria-expanded','false'); }
+    }
+
+    toggle?.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      panel.classList.toggle('is-open');
+    });
+
+    panel?.addEventListener('click', closeOnLinkClick);
+    // Fecha ao redimensionar para desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 980 && panel.classList.contains('is-open')){
+        panel.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded','false');
+      }
+    });
+  })();
+</script>
 </body>
 </html>
