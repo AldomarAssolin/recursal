@@ -45,6 +45,7 @@
     .btn{
       display:inline-flex; align-items:center; gap:.65rem;
       background:var(--yellow); color:#111; border:0; border-radius:999px;
+      margin-top: .5rem;
       padding:.95rem 1.25rem; font-weight:800; box-shadow:var(--shadow); cursor:pointer;
       transition:.18s ease-in-out;
     }
@@ -185,6 +186,7 @@
     .form{
       background:linear-gradient(180deg, #111, #0b0b0b);
       border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:1.2rem; box-shadow:var(--shadow);
+      margin-bottom: 1rem;
     }
     .field{display:flex; flex-direction:column; gap:.35rem}
     .field input, .field textarea{
@@ -208,6 +210,7 @@
 
       /* Breakpoints / responsividade extra */
   @media (max-width: 980px){
+    .btn{width:100%; justify-content:center; margin-top: 1rem;}
     .menu-desktop{display:none}
     .nav-toggle{display:inline-block}
     .container{width:min(1180px,94%)}
@@ -501,50 +504,66 @@
 
   <!-- ===== CONTATO ===== -->
   <!-- Formulário de Contato -->
-  <section id="contato" aria-label="Contato">
-    <div class="container grid grid-2">
-      <div class="form">
+ <!-- ================= CONTATO (RESPONSIVO DE VERDADE) ================= -->
+<section id="contato" aria-label="Contato">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="form card">
         <h3 style="margin:0 0 .4rem">Fale com um especialista agora</h3>
         <p class="subtitle" style="margin:0 0 .9rem">Preencha e inicie seu atendimento prioritário no WhatsApp.</p>
 
-        <form onsubmit="return goWhats(event);" class="grid" style="grid-template-columns:1fr 1fr">
+        <form onsubmit="return goWhats(event);" class="form-grid" novalidate>
           <div class="field">
             <label for="nome">Nome</label>
-            <input id="nome" name="nome" type="text" placeholder="Seu nome" required>
+            <input id="nome" name="nome" type="text" placeholder="Seu nome"
+                   autocomplete="name" required>
           </div>
+
           <div class="field">
             <label for="fone">WhatsApp</label>
-            <input id="fone" name="fone" type="tel" placeholder="(55) 9XXXX-XXXX" required>
+            <input id="fone" name="fone" type="tel" placeholder="(55) 9XXXX-XXXX"
+                   autocomplete="tel" inputmode="tel" required>
           </div>
-          <div class="field" style="grid-column:1/-1">
+
+          <div class="field -full">
             <label for="email">E-mail</label>
-            <input id="email" name="email" type="email" placeholder="seu@email.com">
+            <input id="email" name="email" type="email" placeholder="seu@email.com"
+                   autocomplete="email">
           </div>
-          <div class="field" style="grid-column:1/-1">
+
+          <div class="field -full">
             <label for="mensagem">Mensagem</label>
-            <textarea id="mensagem" name="mensagem" rows="4" placeholder="Conte resumidamente o seu caso"></textarea>
+            <textarea id="mensagem" name="mensagem" rows="4"
+                      placeholder="Conte resumidamente o seu caso"></textarea>
           </div>
-          <div style="grid-column:1/-1; display:flex; gap:.7rem; flex-wrap:wrap">
-            <button class="btn" type="submit"><i class="fa-brands fa-whatsapp"></i> Iniciar no WhatsApp</button>
-            <a class="btn btn-outline" href="https://wa.me/5555996809646?text=Quero%20atendimento%20priorit%C3%A1rio%20agora." target="_blank" rel="noopener">
+
+          <div class="actions -full">
+            <button class="btn" type="submit">
+              <i class="fa-brands fa-whatsapp"></i> Iniciar no WhatsApp
+            </button>
+            <a class="btn btn-outline" href="https://wa.me/5555996809646?text=Quero%20atendimento%20priorit%C3%A1rio%20agora."
+               target="_blank" rel="noopener">
               <i class="fa-brands fa-whatsapp"></i> Chamar direto
             </a>
           </div>
         </form>
       </div>
 
-      <div class="card">
+      <aside class="card contact-side">
         <h3 style="margin:0 0 .5rem">Documentos úteis</h3>
-        <p class="subtitle">Separe: Auto/Notificações, CNH e CRLV (PDF/JPG). Quanto mais completo, melhor a estratégia.</p>
-        <img src="images/recursal_multas_pendentes.jpg" alt="Multas pendentes" style="border-radius:12px; margin-top:.5rem">
-        <ul style="margin:.6rem 0 0; padding-left:1.1rem; color:#cfcfcf; display:grid; gap:.35rem">
-          <li>Atendimento: seg–sex, 8h às 18h</li>
-          <li>Brasil não — foco no <strong>Rio Grande do Sul</strong></li>
+        <p class="subtitle">Auto/Notificações, CNH e CRLV (PDF/JPG). Quanto mais completo, melhor a estratégia.</p>
+        <img src="images/recursal_multas_pendentes.jpg" alt="Multas pendentes" style="border-radius:12px;margin-top:.5rem">
+        <ul class="subtitle" style="margin:.6rem 0 0; padding-left:1.1rem; display:grid; gap:.35rem">
+          <li>Seg–Sex, 8h–18h</li>
+          <li>Atuação no <strong>Rio Grande do Sul</strong></li>
           <li>Resposta em até 1 dia útil</li>
         </ul>
-      </div>
+      </aside>
     </div>
-  </section>
+  </div>
+</section>
+
+
 
   <!-- ===== FOOTER ===== -->
   <!-- Rodapé -->
@@ -573,8 +592,8 @@
         <strong>Redes</strong>
         <div class="social" style="margin-top:.6rem">
           <a href="https://wa.me/5555996809646" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a href="https://www.instagram.com/recursalmultas" aria-label="Instagram" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i></a>
+          <!-- <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a> -->
         </div>
         <div style="margin-top:1rem; font-size:.9rem; color:#cfcfcf">
           <a href="#" style="text-decoration:underline">Política de privacidade</a>
