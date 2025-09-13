@@ -507,7 +507,7 @@
             </div>
             <div class="field">
               <label for="fone">WhatsApp</label>
-              <input id="fone" name="fone" type="tel" placeholder="(55) 9XXXX-XXXX" autocomplete="tel" inputmode="tel" required>
+              <input id="fone" name="fone" type="tel" placeholder="(XX) XXXXX-XXXX" autocomplete="tel" inputmode="tel" required maxlength="16">
             </div>
             <div class="field -full">
               <label for="email">E-mail</label>
@@ -627,18 +627,39 @@
       window.addEventListener('resize',()=>{ if(window.innerWidth>980 && panel.classList.contains('is-open')){ panel.classList.remove('is-open'); toggle.setAttribute('aria-expanded','false'); }});
     })();
 
-    // Máscara simples de WhatsApp (BR)
-    const foneEl = document.getElementById('fone');
-    foneEl?.addEventListener('input', (e)=>{
-      let v = e.target.value.replace(/\D/g,'').slice(0,10);
-      const isNove = v.length>9 && v[2]==='9';
-      if(v.length>0){ v = '('+v }
-      if(v.length>3){ v = v.slice(0,3)+') '+v.slice(3) }
-      if(v.length>9){ v = v.slice(0,9)+(isNove?'9':'')+v.slice(9) }
-      if(v.length>10){ v = v.slice(0,10)+' '+v.slice(10) }
-      if(v.length>15){ v = v.slice(0,15)+'-'+v.slice(15,19) }
-      e.target.value = v;
-    });
+    // Máscara BR sem injetar "9" extra (suporta DDI 55 e DDD)
+const foneEl = document.getElementById('fone');
+
+foneEl?.addEventListener('input', (e) => {
+  let d = e.target.value.replace(/\D/g, '');
+
+  // Se usuário digitar com DDI "55" (ex.: 55 55 99618-6446 => 13 dígitos), remove o DDI
+  if (d.length > 11 && d.startsWith('55')) d = d.slice(2);
+
+  // Mantém no máximo 11 dígitos (DDD + 8 ou 9)
+  d = d.slice(0, 11);
+
+  const len = d.length;
+  let out = d;
+
+  if (len > 0 && len <= 2) {
+    out = `(${d}`;
+  } else if (len > 2 && len <= 6) {
+    // (DD) XXXX
+    out = `(${d.slice(0,2)}) ${d.slice(2)}`;
+  } else if (len === 10) {
+    // (DD) XXXX-XXXX  -> fixo/sem 9
+    out = `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6,10)}`;
+  } else if (len === 11) {
+    // (DD) 9XXXX-XXXX -> móvel/com 9 (já presente no input)
+    out = `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7,11)}`;
+  } else if (len > 6 && len < 10) {
+    // Digitação intermediária (mostra com hífen na melhor posição)
+    out = `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
+  }
+
+  e.target.value = out;
+});
 
     // Envio para WhatsApp com validação + tracking
     function goWhats(e){
