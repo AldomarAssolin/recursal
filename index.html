@@ -1242,7 +1242,7 @@
         (msg ? `\nMensagem: ${msg}` : '');
 
       // constrói a URL com encode só no parâmetro text
-      const url = new URL('https://wa.me/5555996809646');
+      const url = new URL('https://wa.me/555596809646');
       url.searchParams.set('text', texto);
 
       // (opcional) UTMs — o WhatsApp ignora para roteamento, mas você mantém padrão
@@ -1260,16 +1260,6 @@
     }
 
 
-    const link = `https://wa.me/5555996809646?text=${texto}&utm_source=site&utm_medium=form&utm_campaign=recursal_cnh`;
-
-    // Tracking (GA4/Ads/Meta + dataLayer/GTM)
-    try { window.__trackLead('form_whats'); window.__trackContact('form_whats'); } catch (e) { }
-    try { window.__fbLead('form_whats'); window.__fbContact('form_whats'); } catch (e) { }
-    try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: 'whatsapp_open', origin: 'form' }); } catch (e) { }
-
-    window.open(link, '_blank', 'noopener');
-    return false;
-    }
 
     // Tracking básico para cliques em CTAs
     document.querySelectorAll('.data-cta')?.forEach(el => {
