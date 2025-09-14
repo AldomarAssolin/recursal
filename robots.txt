@@ -1,4 +1,8 @@
+User-agent: *
 Allow: /assets/
 Allow: /css/
 Allow: /js/
 Allow: /images/
+
+# Sitemap: https://www.example.com/sitemap.xml
+
